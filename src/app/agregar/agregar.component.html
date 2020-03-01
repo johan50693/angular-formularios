@@ -1,0 +1,66 @@
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="formularioCreado">
+          <div class="form-group">
+              <label for="">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre">
+          </div>
+          <div *ngIf="formularioCreado.controls['nombre'].invalid && formularioCreado.controls['nombre'].dirty" class="alert alert-danger" role="alert">
+            <span *ngIf="formularioCreado.controls['nombre'].errors.required">El nombre es requerido</span>  
+          </div>
+          <div class="form-group">
+              <label for="">Correo</label>
+              <input type="email" class="form-control" formControlName="correo">
+          </div>
+          <div *ngIf="formularioCreado.controls['correo'].invalid && formularioCreado.controls['correo'].dirty">
+            <div *ngIf="formularioCreado.controls['correo'].errors.required" class="alert alert-danger" role="alert">
+              <span>El correo es requerido</span>  
+            </div>
+            <div *ngIf="formularioCreado.controls['correo'].errors.email" class="alert alert-danger" role="alert">
+              <span>El formato de correo es inválido</span> 
+            </div>
+          </div>
+          <div class="form-group">
+              <label for="">Contraseña</label>
+              <input type="password" class="form-control" formControlName="password">
+          </div>
+          <div *ngIf="formularioCreado.controls['password'].invalid && formularioCreado.controls['password'].dirty">
+            <div *ngIf="formularioCreado.controls['password'].errors.required" class="alert alert-danger" role="alert">
+                <span>La contraseña es requerida</span>
+            </div>
+            <div *ngIf="formularioCreado.controls['password'].errors.minlength" class="alert alert-danger" role="alert">
+                <span>La contraseña debe tener al menos 8 caracteres</span>
+            </div>
+          </div>
+
+          <button *ngIf="esNuevo" [disabled]="!formularioCreado.valid" (click)="agregar()" class="btn btn-primary">Agregar</button>
+          <button *ngIf="!esNuevo" [disabled]="!formularioCreado.valid" (click)="editar()" class="btn btn-danger">Editar</button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Lista de usuarios</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div *ngFor="let item of usuarios; let posicion=index">
+            <p>{{ item.nombre}} posición: {{posicion}}</p>
+            <p>{{ item.correo}}</p>
+            <p>{{ item.password}}</p>
+            <button (click)="editarUsuario(posicion)" class="btn btn-success">Editar</button>
+            <button (click)="eliminarUsuario(posicion)" class="btn btn-warning">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</div>
+    
+ 
